@@ -1,9 +1,6 @@
 ﻿using System;
 using board;
 using xadrez;
-using Xadrez_console.xadrez;
-using Xadrez_console;
-
 
 namespace Xadrez_console
 {
@@ -11,15 +8,29 @@ namespace Xadrez_console
     {
         static void Main(string[] args)
         {
-            Board bor = new Board(8, 8);
+            try
+            {
+                XadrezGame game = new XadrezGame();
+                while (!game.Finish) 
+                {
+                    Console.Clear();
+                    Screen.printBoard(game.bor);
 
-            bor.putPiece(new Tower(bor, Color.Black), new Position(0, 0));
-            bor.putPiece(new Tower(bor, Color.Black), new Position(1, 3));
-            bor.putPiece(new Tower(bor, Color.Black), new Position(0, 2));
-            bor.putPiece(new Tower(bor, Color.White), new Position(3, 5));
+                    Console.WriteLine();
+                    Console.Write("Origin: ");
+                    Position origin = Screen.readPositionXadrez().toPosition();
+                    Console.Write("Destination: ");
+                    Position destination = Screen.readPositionXadrez().toPosition();
 
+                    game.runMoviment(origin, destination);
 
-            Screen.printBoard(bor);
+                }
+                Screen.printBoard(game.bor);
+            }
+            catch (BoardException e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
     }
 }

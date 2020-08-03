@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using board;
-using Xadrez_console.board;
 
 namespace xadrez
 {

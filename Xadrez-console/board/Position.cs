@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
+
 namespace board
 {
     class Position
@@ -20,6 +21,11 @@ namespace board
             return Line 
                 + ", "
                 + Column;
+        }
+
+        internal Position toPosition()
+        {
+            throw new NotImplementedException();
         }
     }
 }

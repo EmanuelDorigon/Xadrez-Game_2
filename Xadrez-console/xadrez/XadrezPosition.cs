@@ -1,6 +1,6 @@
 ﻿using board;
 
-namespace Xadrez_console.xadrez
+namespace xadrez
 {
     class XadrezPosition
     {

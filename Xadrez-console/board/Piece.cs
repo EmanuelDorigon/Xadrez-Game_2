@@ -16,5 +16,9 @@ namespace board
             Boar = boar;
             MovimentQuantity = 0;
         }
+        public void incrementMoviment()
+        {
+            MovimentQuantity++;
+        }
     }
 }
