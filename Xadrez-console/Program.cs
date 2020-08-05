@@ -19,6 +19,14 @@ namespace Xadrez_console
                     Console.WriteLine();
                     Console.Write("Origin: ");
                     Position origin = Screen.readPositionXadrez().toPosition();
+                    bool[,] positionPosible = game.bor.piece(origin).movimetsPosible();
+
+                    Console.Clear();
+                    Screen.printBoard(game.bor, positionPosible);
+
+
+
+                    Console.WriteLine();
                     Console.Write("Destination: ");
                     Position destination = Screen.readPositionXadrez().toPosition();
 

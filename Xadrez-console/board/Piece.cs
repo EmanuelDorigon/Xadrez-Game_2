@@ -2,7 +2,7 @@
 
 namespace board
 {
-    class Piece
+    abstract class Piece
     {
         public Position Position { get; set; }
         public Color Color { get; protected set; }
@@ -20,5 +20,10 @@ namespace board
         {
             MovimentQuantity++;
         }
+
+        public abstract bool[,] movimetsPosible(); // We have metod abstract, becose Piese is class generic
+        
+        
+        
     }
 }

@@ -27,5 +27,10 @@ namespace board
         {
             throw new NotImplementedException();
         }
+        public void defineValue(int line, int column)
+        {
+            Line = line;
+            Column = column;
+        }
     }
 }
