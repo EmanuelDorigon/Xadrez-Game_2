@@ -8,8 +8,8 @@ namespace xadrez
     class XadrezGame
     {
         public Board bor { get; private set; }
-        private int round;
-        private Color CurrentePlayer;
+        public int round { get; private set; }
+        public Color CurrentePlayer { get; private set; }
         public bool Finish { get; private set; }
         public XadrezGame()
         {
@@ -26,6 +26,49 @@ namespace xadrez
             p.incrementMoviment();
             Piece pieceCaptured = bor.removePiece(destination);
             bor.putPiece(p, destination);
+
+        }
+
+        public void gamedPerforms(Position origin, Position destination)
+        {
+            runMoviment(origin, destination);
+            round++;
+            changedPlayer();
+        }
+        public void validPositionTheOrigin(Position pos)
+        {
+            if (bor.piece(pos) == null)
+            {
+                throw new BoardException("Not exist piece in the position chosen");
+            }
+            if (CurrentePlayer != bor.piece(pos).Color)
+            {
+                throw new BoardException("This piece is not your");
+            }
+            if (!bor.piece(pos).existMovimentsPosible())
+            {
+                throw new BoardException("There is no possible movement for de chosen piece");
+            }
+
+        }
+
+        public void validateTargetPosition(Position origin, Position destination)
+        {
+            if (!bor.piece(origin).canMoveTo(destination))
+            {
+                throw new BoardException("Destination position invalidates");
+            }
+        }
+        private void changedPlayer()
+        {
+            if (CurrentePlayer == Color.White)
+            {
+                CurrentePlayer = Color.Black;
+            }
+            else
+            {
+                CurrentePlayer = Color.White;
+            }
 
         }
         private void putPieces()

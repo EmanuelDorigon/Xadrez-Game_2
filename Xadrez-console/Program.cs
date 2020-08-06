@@ -13,24 +13,42 @@ namespace Xadrez_console
                 XadrezGame game = new XadrezGame();
                 while (!game.Finish) 
                 {
-                    Console.Clear();
-                    Screen.printBoard(game.bor);
+                    try
+                    {
+                        Console.Clear();
+                        Screen.printBoard(game.bor);
+                        Console.WriteLine();
+                        Console.WriteLine("Round: " + game.round);
+                        Console.WriteLine("Waiting played pieces " + game.CurrentePlayer);
 
-                    Console.WriteLine();
-                    Console.Write("Origin: ");
-                    Position origin = Screen.readPositionXadrez().toPosition();
-                    bool[,] positionPosible = game.bor.piece(origin).movimetsPosible();
+                        Console.WriteLine();
+                        Console.Write("Origin: ");
+                        Position origin = Screen.readPositionXadrez().toPosition();
+                        game.validPositionTheOrigin(origin);
+                        bool[,] positionPosible = game.bor.piece(origin).movimetsPosible();
 
-                    Console.Clear();
-                    Screen.printBoard(game.bor, positionPosible);
+                        Console.Clear();
+                        Screen.printBoard(game.bor, positionPosible);
 
 
 
-                    Console.WriteLine();
-                    Console.Write("Destination: ");
-                    Position destination = Screen.readPositionXadrez().toPosition();
+                        Console.WriteLine();
+                        Console.WriteLine();
+                        Console.WriteLine();
+                        Console.WriteLine();
 
-                    game.runMoviment(origin, destination);
+                        Console.Write("Destination: ");
+                        Position destination = Screen.readPositionXadrez().toPosition();
+                        game.validateTargetPosition(origin, destination);
+
+                        game.gamedPerforms(origin, destination);
+                    }
+                    catch (BoardException c)
+                    {
+                        Console.WriteLine(c.Message);
+                        Console.WriteLine("Press enter to continue!");
+                        Console.ReadLine();
+                    }
 
                 }
                 Screen.printBoard(game.bor);
