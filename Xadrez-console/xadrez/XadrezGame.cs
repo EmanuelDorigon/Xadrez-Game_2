@@ -11,13 +11,17 @@ namespace xadrez
         public int round { get; private set; }
         public Color CurrentePlayer { get; private set; }
         public bool Finish { get; private set; }
+        private HashSet<Piece> pieces;
+        private HashSet<Piece> captured;
         public XadrezGame()
         {
             bor = new Board(8, 8);
             round = 1;
             CurrentePlayer = Color.White;
-            putPieces();
             Finish = false;
+            pieces = new HashSet<Piece>();
+            captured = new HashSet<Piece>();
+            putPieces();
         }
 
         public void runMoviment(Position origin, Position destination)
@@ -26,6 +30,10 @@ namespace xadrez
             p.incrementMoviment();
             Piece pieceCaptured = bor.removePiece(destination);
             bor.putPiece(p, destination);
+            if (pieceCaptured != null)
+            {
+                captured.Add(pieceCaptured);
+            }
 
         }
 
@@ -71,21 +79,51 @@ namespace xadrez
             }
 
         }
+        public HashSet<Piece> pieceCaptured(Color color)
+        {
+            HashSet<Piece> aux = new HashSet<Piece>();
+            foreach (Piece x in captured)
+            {
+                if (x.Color == color)
+                {
+                    aux.Add(x);
+                }
+            }
+            return aux;
+        }
+        public HashSet<Piece> pieceinGame(Color color)
+        {
+            HashSet<Piece> aux = new HashSet<Piece>();
+            foreach (Piece x in captured)
+            {
+                if (x.Color == color)
+                {
+                    aux.Add(x);
+                }
+            }
+            aux.ExceptWith(pieceCaptured(color));
+            return aux;
+        }
+        public void putNewPiece(char column, int line, Piece piece)
+        {
+            bor.putPiece(piece, new XadrezPosition(column, line).toPosition());
+            pieces.Add(piece);
+        }
         private void putPieces()
         {
-            bor.putPiece(new Tower(bor, Color.White), new XadrezPosition('c', 1).toPosition());
-            bor.putPiece(new Tower(bor, Color.White), new XadrezPosition('c', 2).toPosition());
-            bor.putPiece(new Tower(bor, Color.White), new XadrezPosition('d', 2).toPosition());
-            bor.putPiece(new Tower(bor, Color.White), new XadrezPosition('e', 2).toPosition());
-            bor.putPiece(new Tower(bor, Color.White), new XadrezPosition('e', 1).toPosition());
-            bor.putPiece(new King(bor, Color.White), new XadrezPosition('d', 1).toPosition());
+            putNewPiece('c', 1, new Tower(bor, Color.White));
+            putNewPiece('c', 2, new Tower(bor, Color.White));
+            putNewPiece('d', 2, new Tower(bor, Color.White));
+            putNewPiece('e', 2, new Tower(bor, Color.White));
+            putNewPiece('e', 1, new Tower(bor, Color.White));
+            putNewPiece('d', 1, new King(bor, Color.White));
 
-            bor.putPiece(new Tower(bor, Color.Black), new XadrezPosition('c', 7).toPosition());
-            bor.putPiece(new Tower(bor, Color.Black), new XadrezPosition('c', 8).toPosition());
-            bor.putPiece(new Tower(bor, Color.Black), new XadrezPosition('d', 7).toPosition());
-            bor.putPiece(new Tower(bor, Color.Black), new XadrezPosition('e', 7).toPosition());
-            bor.putPiece(new Tower(bor, Color.Black), new XadrezPosition('e', 8).toPosition());
-            bor.putPiece(new King(bor, Color.Black), new XadrezPosition('d', 8).toPosition());
+            putNewPiece('c', 7, new Tower(bor, Color.Black));
+            putNewPiece('c', 8, new Tower(bor, Color.Black));
+            putNewPiece('d', 7, new Tower(bor, Color.Black));
+            putNewPiece('e', 7, new Tower(bor, Color.Black));
+            putNewPiece('e', 8, new Tower(bor, Color.Black));
+            putNewPiece('d', 8, new King(bor, Color.Black));
 
         }
 

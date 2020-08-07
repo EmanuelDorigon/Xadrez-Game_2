@@ -16,10 +16,7 @@ namespace Xadrez_console
                     try
                     {
                         Console.Clear();
-                        Screen.printBoard(game.bor);
-                        Console.WriteLine();
-                        Console.WriteLine("Round: " + game.round);
-                        Console.WriteLine("Waiting played pieces " + game.CurrentePlayer);
+                        Screen.printMatch(game);
 
                         Console.WriteLine();
                         Console.Write("Origin: ");

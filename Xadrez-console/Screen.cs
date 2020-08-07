@@ -7,6 +7,36 @@ namespace Xadrez_console
 {
     class Screen
     {
+        public static void printMatch(XadrezGame match)
+        {
+            printBoard(match.bor);
+            Console.WriteLine();
+            printPieceCapture(match);
+            Console.WriteLine();
+            Console.WriteLine("Round: " + match.round);
+            Console.WriteLine("Waiting played pieces " + match.CurrentePlayer);
+        }
+        public static void printPieceCapture(XadrezGame match)
+        {
+            Console.WriteLine("Captured pieces");
+            Console.Write("White: ");
+            printAssembli(match.pieceCaptured(Color.White));
+            Console.Write("Black: ");
+            ConsoleColor aux = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            printAssembli(match.pieceCaptured(Color.Black));
+            Console.ForegroundColor = aux;            
+        }
+        public static void printAssembli(HashSet<Piece> assembli)
+        {
+            Console.Write("[");
+            foreach (Piece x in assembli)
+            {
+                Console.Write(x + " ");
+            }
+            Console.WriteLine("]");
+        }
+
         public static void printBoard(Board bor)
         {
             for (int i = 0; i < bor.Lines; i++)
