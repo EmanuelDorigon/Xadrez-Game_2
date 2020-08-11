@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using xadrez;
-using board;
+﻿using board;
 
 namespace xadrez
 {
@@ -14,7 +10,7 @@ namespace xadrez
 
         public override string ToString()
         {
-            return "R";
+            return "K";
         }
         private bool canMoviment(Position pos)
         {

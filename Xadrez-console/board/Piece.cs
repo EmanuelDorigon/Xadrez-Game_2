@@ -20,6 +20,10 @@ namespace board
         {
             MovimentQuantity++;
         }
+        public void decrementMoviment()
+        {
+            MovimentQuantity--;
+        }
 
         public bool existMovimentsPosible()
         {

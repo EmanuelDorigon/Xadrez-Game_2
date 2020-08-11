@@ -15,6 +15,10 @@ namespace Xadrez_console
             Console.WriteLine();
             Console.WriteLine("Round: " + match.round);
             Console.WriteLine("Waiting played pieces " + match.CurrentePlayer);
+            if (match.CheckMate)
+            {
+                Console.WriteLine("Checkmate");
+            }
         }
         public static void printPieceCapture(XadrezGame match)
         {

@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using board;
+
 
 namespace xadrez
 {
@@ -13,6 +12,7 @@ namespace xadrez
         public bool Finish { get; private set; }
         private HashSet<Piece> pieces;
         private HashSet<Piece> captured;
+        public bool CheckMate { get; private set; }
         public XadrezGame()
         {
             bor = new Board(8, 8);
@@ -22,9 +22,10 @@ namespace xadrez
             pieces = new HashSet<Piece>();
             captured = new HashSet<Piece>();
             putPieces();
+            CheckMate = false;
         }
 
-        public void runMoviment(Position origin, Position destination)
+        public Piece runMoviment(Position origin, Position destination)
         {
             Piece p = bor.removePiece(origin);
             p.incrementMoviment();
@@ -34,13 +35,42 @@ namespace xadrez
             {
                 captured.Add(pieceCaptured);
             }
+            return pieceCaptured;
 
+        }
+
+        public void undosMoviment(Position origin, Position destination, Piece pieceCaptured)
+        {
+            Piece p = bor.removePiece(destination);
+            p.decrementMoviment();
+            if (pieceCaptured != null)
+            {
+                bor.putPiece(pieceCaptured, destination);
+                captured.Remove(pieceCaptured);
+            }
+            bor.putPiece(p, origin);
         }
 
         public void gamedPerforms(Position origin, Position destination)
         {
-            runMoviment(origin, destination);
-            round++;
+            Piece pieceCaptured = runMoviment(origin, destination);
+            /*
+            if (thisCheckmate(CurrentePlayer))
+            {
+                undosMoviment(origin, destination, pieceCaptured);
+                throw new BoardException("Moviment undone becouse this piece went into checkmate");
+            }
+            
+            if (thisCheckmate(adversary(CurrentePlayer)))
+            {
+                CheckMate = true;
+            }
+            else
+            {
+                CheckMate = false;
+            }
+            */
+            round++;            
             changedPlayer();
         }
         public void validPositionTheOrigin(Position pos)
@@ -91,7 +121,8 @@ namespace xadrez
             }
             return aux;
         }
-        public HashSet<Piece> pieceinGame(Color color)
+        
+        public HashSet<Piece> pieceInGame(Color color)
         {
             HashSet<Piece> aux = new HashSet<Piece>();
             foreach (Piece x in captured)
@@ -104,7 +135,57 @@ namespace xadrez
             aux.ExceptWith(pieceCaptured(color));
             return aux;
         }
-        public void putNewPiece(char column, int line, Piece piece)
+        
+            
+            private Color adversary(Color color)
+            {
+                if (color == Color.White)
+                {
+                    return Color.Black;
+                }
+                else
+                {
+                    return Color.White;
+                }
+            }         
+             
+        /*
+            private Piece king(Color color)
+            {
+                foreach (Piece x in pieceInGame(color))
+                {
+                    if (x is King)
+                    {
+                        return x;
+                    }
+                }
+                return null;
+            }
+            
+    */
+           /* 
+            public bool thisCheckmate(Color color)
+            {
+                Piece K = king(color);
+                if (K == null)
+                {
+                    throw new BoardException("Don't have king " + color + " in the board");
+                }
+
+                foreach (Piece x in pieceInGame(adversary(color)))
+                {
+                    bool[,] array = x.movimetsPosible();
+                    if (array[K.Position.Line, K.Position.Column])
+                    {
+                        return true;
+                    }
+
+                }
+                return false;
+            }
+            */
+
+            public void putNewPiece(char column, int line, Piece piece)
         {
             bor.putPiece(piece, new XadrezPosition(column, line).toPosition());
             pieces.Add(piece);
