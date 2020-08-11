@@ -92,7 +92,7 @@ namespace xadrez
 
         public void validateTargetPosition(Position origin, Position destination)
         {
-            if (!bor.piece(origin).canMoveTo(destination))
+            if (!bor.piece(origin).possibleMoviment(destination))
             {
                 throw new BoardException("Destination position invalidates");
             }
