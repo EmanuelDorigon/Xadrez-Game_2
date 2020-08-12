@@ -35,6 +35,25 @@ namespace xadrez
             {
                 captured.Add(pieceCaptured);
             }
+
+            // #jogadaespecial small roque
+            if(p is King && destination.Column == origin.Column + 2)
+            {
+                Position originTower = new Position(origin.Line, origin.Column + 3);
+                Position destinationTower = new Position(origin.Line, origin.Column + 1);
+                Piece T = bor.removePiece(originTower);
+                T.incrementMoviment();
+                bor.putPiece(T, destinationTower);
+            }
+            // #jogadaespecial big roque
+            if (p is King && destination.Column == origin.Column - 2)
+            {
+                Position originTower = new Position(origin.Line, origin.Column - 4);
+                Position destinationTower = new Position(origin.Line, origin.Column - 1);
+                Piece T = bor.removePiece(originTower);
+                T.incrementMoviment();
+                bor.putPiece(T, destinationTower);
+            }
             return pieceCaptured;
 
         }
@@ -49,6 +68,25 @@ namespace xadrez
                 captured.Remove(pieceCaptured);
             }
             bor.putPiece(p, origin);
+            // #jogadaespecial small roque
+            if (p is King && destination.Column == origin.Column + 2)
+            {
+                Position originTower = new Position(origin.Line, origin.Column + 3);
+                Position destinationTower = new Position(origin.Line, origin.Column + 1);
+                Piece T = bor.removePiece(destinationTower);
+                T.decrementMoviment();
+                bor.putPiece(T, originTower);
+            }
+
+            // #jogadaespecial big roque
+            if (p is King && destination.Column == origin.Column - 2)
+            {
+                Position originTower = new Position(origin.Line, origin.Column - 4);
+                Position destinationTower = new Position(origin.Line, origin.Column - 1);
+                Piece T = bor.removePiece(destinationTower);
+                T.decrementMoviment();
+                bor.putPiece(T, originTower);
+            }
         }
 
         public void gamedPerforms(Position origin, Position destination)
