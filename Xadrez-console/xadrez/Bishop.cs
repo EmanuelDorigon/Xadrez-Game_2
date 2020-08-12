@@ -1,16 +1,19 @@
-﻿using board;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using board;
 
 namespace xadrez
 {
-    class Tower : Piece
+    class Bishop : Piece
     {
-        public Tower(Board boar, Color color) : base(boar, color)
+        public Bishop(Board boar, Color color) : base(boar, color)
         {
         }
 
         public override string ToString()
         {
-            return "T";
+            return "B";
         }
 
         private bool canMoviment(Position pos)
@@ -24,8 +27,8 @@ namespace xadrez
             Position pos = new Position(0, 0);
 
 
-            //up
-            pos.defineValue(Position.Line - 1, Position.Column);
+            //NorthEast
+            pos.defineValue(Position.Line - 1, Position.Column + 1);
             while (Boar.positionValid(pos) && canMoviment(pos))
             {
                 array[pos.Line, pos.Column] = true;
@@ -34,10 +37,24 @@ namespace xadrez
                     break;
                 }
                 pos.Line -= 1;
+                pos.Column += 1;
             }
 
-            //Down
-            pos.defineValue(Position.Line + 1, Position.Column);
+            //NorthWest
+            pos.defineValue(Position.Line - 1, Position.Column - 1);
+            while (Boar.positionValid(pos) && canMoviment(pos))
+            {
+                array[pos.Line, pos.Column] = true;
+                if (Boar.piece(pos) != null && Boar.piece(pos).Color != Color)
+                {
+                    break;
+                }
+                pos.Line -= 1;
+                pos.Column -= 1;
+            }
+
+            //SouthWest
+            pos.defineValue(Position.Line + 1, Position.Column - 1);
             while (Boar.positionValid(pos) && canMoviment(pos))
             {
                 array[pos.Line, pos.Column] = true;
@@ -46,30 +63,20 @@ namespace xadrez
                     break;
                 }
                 pos.Line += 1;
-            }
-
-            //right
-            pos.defineValue(Position.Line, Position.Column + 1);
-            while (Boar.positionValid(pos) && canMoviment(pos))
-            {
-                array[pos.Line, pos.Column] = true;
-                if (Boar.piece(pos) != null && Boar.piece(pos).Color != Color)
-                {
-                    break;
-                }
-                pos.Column += 1;
-            }
-
-            //left
-            pos.defineValue(Position.Line, Position.Column - 1);
-            while (Boar.positionValid(pos) && canMoviment(pos))
-            {
-                array[pos.Line, pos.Column] = true;
-                if (Boar.piece(pos) != null && Boar.piece(pos).Color != Color)
-                {
-                    break;
-                }
                 pos.Column -= 1;
+            }
+
+            //SouthEast
+            pos.defineValue(Position.Line + 1, Position.Column + 1);
+            while (Boar.positionValid(pos) && canMoviment(pos))
+            {
+                array[pos.Line, pos.Column] = true;
+                if (Boar.piece(pos) != null && Boar.piece(pos).Color != Color)
+                {
+                    break;
+                }
+                pos.Line += 1;
+                pos.Column += 1;
             }
 
             return array;

@@ -193,16 +193,16 @@ namespace xadrez
         private void putPieces()
         {
             putNewPiece('c', 1, new Tower(bor, Color.White));
-            putNewPiece('c', 2, new Tower(bor, Color.White));
-            putNewPiece('d', 2, new Tower(bor, Color.White));
-            putNewPiece('e', 2, new Tower(bor, Color.White));
+            putNewPiece('c', 2, new Pawn(bor, Color.White));
+            putNewPiece('d', 2, new Bishop(bor, Color.White));
+            putNewPiece('e', 2, new Lady(bor, Color.White));
             putNewPiece('e', 1, new Tower(bor, Color.White));
             putNewPiece('d', 1, new King(bor, Color.White));
 
-            putNewPiece('c', 7, new Tower(bor, Color.Black));
-            putNewPiece('c', 8, new Tower(bor, Color.Black));
+            putNewPiece('c', 7, new Pawn(bor, Color.Black));
+            putNewPiece('c', 8, new Bishop(bor, Color.Black));
             putNewPiece('d', 7, new Tower(bor, Color.Black));
-            putNewPiece('e', 7, new Tower(bor, Color.Black));
+            putNewPiece('e', 7, new Lady(bor, Color.Black));
             putNewPiece('e', 8, new Tower(bor, Color.Black));
             putNewPiece('d', 8, new King(bor, Color.Black));
 

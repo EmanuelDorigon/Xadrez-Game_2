@@ -29,7 +29,7 @@ namespace Xadrez_console
             ConsoleColor aux = Console.ForegroundColor;
             Console.ForegroundColor = ConsoleColor.Yellow;
             printAssembli(match.pieceCaptured(Color.Black));
-            Console.ForegroundColor = aux;            
+            Console.ForegroundColor = aux;
         }
         public static void printAssembli(HashSet<Piece> assembli)
         {
@@ -69,7 +69,7 @@ namespace Xadrez_console
                     {
                         Console.BackgroundColor = bottonChanged;         //fundo cinza para selecionar a possição desejada
                     }
-                    else 
+                    else
                     {
                         Console.BackgroundColor = bottonOriginal;
                     }
@@ -112,7 +112,20 @@ namespace Xadrez_console
         {
             string s = Console.ReadLine();
             char column = s[0];
+            if (s[0] == 'a' || s[0] == 'b' || s[0] == 'c' || s[0] == 'd' || s[0] == 'e' || s[0] == 'f' || s[0] == 'g' || s[0] == 'h' ||
+                s[0] == 'A' || s[0] == 'B' || s[0] == 'C' || s[0] == 'D' || s[0] == 'E' || s[0] == 'F' || s[0] == 'G' || s[0] == 'H')
+            {
+            }
+            else
+            {
+                throw new BoardException("Invalid caracter");
+            }
+
             int line = int.Parse(s[1] + "");
+            if (line > 8 || line < 1)
+            {
+                throw new BoardException("Invalid number");
+            }
             return new XadrezPosition(column, line);
         }
     }

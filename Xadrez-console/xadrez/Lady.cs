@@ -2,15 +2,15 @@
 
 namespace xadrez
 {
-    class Tower : Piece
+    class Lady : Piece
     {
-        public Tower(Board boar, Color color) : base(boar, color)
+        public Lady(Board boar, Color color) : base(boar, color)
         {
         }
 
         public override string ToString()
         {
-            return "T";
+            return "L";
         }
 
         private bool canMoviment(Position pos)
@@ -70,6 +70,57 @@ namespace xadrez
                     break;
                 }
                 pos.Column -= 1;
+            }
+            //NorthEast
+            pos.defineValue(Position.Line - 1, Position.Column + 1);
+            while (Boar.positionValid(pos) && canMoviment(pos))
+            {
+                array[pos.Line, pos.Column] = true;
+                if (Boar.piece(pos) != null && Boar.piece(pos).Color != Color)
+                {
+                    break;
+                }
+                pos.Line -= 1;
+                pos.Column += 1;
+            }
+
+            //NorthWest
+            pos.defineValue(Position.Line - 1, Position.Column - 1);
+            while (Boar.positionValid(pos) && canMoviment(pos))
+            {
+                array[pos.Line, pos.Column] = true;
+                if (Boar.piece(pos) != null && Boar.piece(pos).Color != Color)
+                {
+                    break;
+                }
+                pos.Line -= 1;
+                pos.Column -= 1;
+            }
+
+            //SouthWest
+            pos.defineValue(Position.Line + 1, Position.Column - 1);
+            while (Boar.positionValid(pos) && canMoviment(pos))
+            {
+                array[pos.Line, pos.Column] = true;
+                if (Boar.piece(pos) != null && Boar.piece(pos).Color != Color)
+                {
+                    break;
+                }
+                pos.Line += 1;
+                pos.Column -= 1;
+            }
+
+            //SouthEast
+            pos.defineValue(Position.Line + 1, Position.Column + 1);
+            while (Boar.positionValid(pos) && canMoviment(pos))
+            {
+                array[pos.Line, pos.Column] = true;
+                if (Boar.piece(pos) != null && Boar.piece(pos).Color != Color)
+                {
+                    break;
+                }
+                pos.Line += 1;
+                pos.Column += 1;
             }
 
             return array;
