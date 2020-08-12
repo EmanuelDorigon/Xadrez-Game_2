@@ -54,6 +54,7 @@ namespace xadrez
         public void gamedPerforms(Position origin, Position destination)
         {
             Piece pieceCaptured = runMoviment(origin, destination);
+            Piece pieceCaptured2 = pieceCaptured;
             /*
             if (thisCheckmate(CurrentePlayer))
             {
@@ -192,19 +193,42 @@ namespace xadrez
         }
         private void putPieces()
         {
-            putNewPiece('c', 1, new Tower(bor, Color.White));
+            putNewPiece('a', 2, new Pawn(bor, Color.White));
+            putNewPiece('b', 2, new Pawn(bor, Color.White));
             putNewPiece('c', 2, new Pawn(bor, Color.White));
-            putNewPiece('d', 2, new Bishop(bor, Color.White));
-            putNewPiece('e', 2, new Lady(bor, Color.White));
-            putNewPiece('e', 1, new Tower(bor, Color.White));
-            putNewPiece('d', 1, new King(bor, Color.White));
+            putNewPiece('d', 2, new Pawn(bor, Color.White));
+            putNewPiece('e', 2, new Pawn(bor, Color.White));
+            putNewPiece('f', 2, new Pawn(bor, Color.White));
+            putNewPiece('g', 2, new Pawn(bor, Color.White));
+            putNewPiece('h', 2, new Pawn(bor, Color.White));
+            putNewPiece('a', 1, new Tower(bor, Color.White));
+            putNewPiece('b', 1, new Horse(bor, Color.White));
+            putNewPiece('c', 1, new Bishop(bor, Color.White));
+            putNewPiece('d', 1, new Lady(bor, Color.White));
+            putNewPiece('e', 1, new King(bor, Color.White));
+            putNewPiece('f', 1, new Bishop(bor, Color.White));
+            putNewPiece('g', 1, new Horse(bor, Color.White));
+            putNewPiece('h', 1, new Tower(bor, Color.White));
 
+
+
+            putNewPiece('a', 7, new Pawn(bor, Color.Black));
+            putNewPiece('b', 7, new Pawn(bor, Color.Black));
             putNewPiece('c', 7, new Pawn(bor, Color.Black));
+            putNewPiece('d', 7, new Pawn(bor, Color.Black));
+            putNewPiece('e', 7, new Pawn(bor, Color.Black));
+            putNewPiece('f', 7, new Pawn(bor, Color.Black));
+            putNewPiece('g', 7, new Pawn(bor, Color.Black));
+            putNewPiece('h', 7, new Pawn(bor, Color.Black));
+            putNewPiece('a', 8, new Tower(bor, Color.Black));
+            putNewPiece('b', 8, new Horse(bor, Color.Black));
             putNewPiece('c', 8, new Bishop(bor, Color.Black));
-            putNewPiece('d', 7, new Tower(bor, Color.Black));
-            putNewPiece('e', 7, new Lady(bor, Color.Black));
-            putNewPiece('e', 8, new Tower(bor, Color.Black));
-            putNewPiece('d', 8, new King(bor, Color.Black));
+            putNewPiece('d', 8, new Lady(bor, Color.Black));
+            putNewPiece('e', 8, new King(bor, Color.Black));
+            putNewPiece('f', 8, new Bishop(bor, Color.Black));
+            putNewPiece('g', 8, new Horse(bor, Color.Black));
+            putNewPiece('h', 8, new Tower(bor, Color.Black));
+
 
         }
 

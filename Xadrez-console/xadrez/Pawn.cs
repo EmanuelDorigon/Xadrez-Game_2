@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using board;
-using xadrez;
+﻿using board;
+
 
 namespace xadrez
 {
@@ -31,7 +28,12 @@ namespace xadrez
             Position pos = new Position(0, 0);
 
             if (Color == Color.White)
-            { 
+            {
+                pos.defineValue(Position.Line - 2, Position.Column);
+                if (Boar.positionValid(pos)  && MovimentQuantity == 0)
+                {
+                    array[pos.Line, pos.Column] = true;
+                }
                 //up
                 pos.defineValue(Position.Line - 1, Position.Column);
                 if (Boar.positionValid(pos) && free(pos))
@@ -52,14 +54,15 @@ namespace xadrez
                 {
                     array[pos.Line, pos.Column] = true;
                 }
-                pos.defineValue(Position.Line - 2, Position.Column);
-                if (MovimentQuantity == 0)
-                {
-                    array[pos.Line, pos.Column] = true;
-                }
+                
             }
             else           
             {
+                pos.defineValue(Position.Line + 2, Position.Column);
+                if (Boar.positionValid(pos) && MovimentQuantity == 0)
+                {
+                    array[pos.Line, pos.Column] = true;
+                }
                 //up
                 pos.defineValue(Position.Line + 1, Position.Column);
                 if (Boar.positionValid(pos) && free(pos))
@@ -80,11 +83,7 @@ namespace xadrez
                 {
                     array[pos.Line, pos.Column] = true;
                 }
-                pos.defineValue(Position.Line + 2, Position.Column);
-                if (MovimentQuantity == 0)
-                {
-                    array[pos.Line, pos.Column] = true;
-                }
+                
 
             }
 
