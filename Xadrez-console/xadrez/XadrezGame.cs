@@ -13,6 +13,7 @@ namespace xadrez
         private HashSet<Piece> pieces;
         private HashSet<Piece> captured;
         public bool CheckMate { get; private set; }
+        public Piece vulnerableEnPassant { get; private set; }
         public XadrezGame()
         {
             bor = new Board(8, 8);
@@ -23,6 +24,7 @@ namespace xadrez
             captured = new HashSet<Piece>();
             putPieces();
             CheckMate = false;
+            vulnerableEnPassant = null;
         }
 
         public Piece runMoviment(Position origin, Position destination)
@@ -54,6 +56,26 @@ namespace xadrez
                 T.incrementMoviment();
                 bor.putPiece(T, destinationTower);
             }
+
+            // #jogadaespecial en passant
+            if (p is Pawn)
+            {
+                if (origin.Column != destination.Column && pieceCaptured == null)
+                {
+                    Position posP;
+                    if (p.Color == Color.White)
+                    {
+                        posP = new Position(destination.Line + 1, destination.Column);
+                    }
+                    else
+                    {
+                        posP = new Position(destination.Line - 1, destination.Column);
+                    }
+                    pieceCaptured = bor.removePiece(posP);
+                    captured.Add(pieceCaptured);
+                }
+            }
+
             return pieceCaptured;
 
         }
@@ -87,6 +109,26 @@ namespace xadrez
                 T.decrementMoviment();
                 bor.putPiece(T, originTower);
             }
+            // #jogadaespecial en passant
+            if (p is Pawn)
+            {
+                if (origin.Column != destination.Column && pieceCaptured == vulnerableEnPassant)
+                {
+                    Piece pawn = bor.removePiece(destination);
+                    Position posP;
+                    if (p.Color == Color.White)
+                    {
+                        posP = new Position(3, destination.Column);
+                    }
+                    else
+                    {
+                        posP = new Position(4, destination.Column);
+                    }
+                    bor.putPiece(pawn, posP);
+                }
+            }
+
+
         }
 
         public void gamedPerforms(Position origin, Position destination)
@@ -111,7 +153,18 @@ namespace xadrez
             */
             round++;            
             changedPlayer();
+            Piece p = bor.piece(destination);
+            // #jogadaespecial en passant
+            if (p is Pawn && destination.Line == (origin.Line - 2) || destination.Line == (origin.Line + 2))
+            {
+                vulnerableEnPassant = p;
+            }
+            else
+            {
+                vulnerableEnPassant = null;
+            }
         }
+        
         public void validPositionTheOrigin(Position pos)
         {
             if (bor.piece(pos) == null)
@@ -231,14 +284,14 @@ namespace xadrez
         }
         private void putPieces()
         {
-            putNewPiece('a', 2, new Pawn(bor, Color.White));
-            putNewPiece('b', 2, new Pawn(bor, Color.White));
-            putNewPiece('c', 2, new Pawn(bor, Color.White));
-            putNewPiece('d', 2, new Pawn(bor, Color.White));
-            putNewPiece('e', 2, new Pawn(bor, Color.White));
-            putNewPiece('f', 2, new Pawn(bor, Color.White));
-            putNewPiece('g', 2, new Pawn(bor, Color.White));
-            putNewPiece('h', 2, new Pawn(bor, Color.White));
+            putNewPiece('a', 2, new Pawn(bor, Color.White, this));
+            putNewPiece('b', 2, new Pawn(bor, Color.White, this));
+            putNewPiece('c', 5, new Pawn(bor, Color.White, this));
+            putNewPiece('d', 2, new Pawn(bor, Color.White, this));
+            putNewPiece('e', 2, new Pawn(bor, Color.White, this));
+            putNewPiece('f', 4, new Pawn(bor, Color.White, this));
+            putNewPiece('g', 2, new Pawn(bor, Color.White, this));
+            putNewPiece('h', 2, new Pawn(bor, Color.White, this));
             putNewPiece('a', 1, new Tower(bor, Color.White));
             putNewPiece('b', 1, new Horse(bor, Color.White));
             putNewPiece('c', 1, new Bishop(bor, Color.White));
@@ -250,14 +303,14 @@ namespace xadrez
 
 
 
-            putNewPiece('a', 7, new Pawn(bor, Color.Black));
-            putNewPiece('b', 7, new Pawn(bor, Color.Black));
-            putNewPiece('c', 7, new Pawn(bor, Color.Black));
-            putNewPiece('d', 7, new Pawn(bor, Color.Black));
-            putNewPiece('e', 7, new Pawn(bor, Color.Black));
-            putNewPiece('f', 7, new Pawn(bor, Color.Black));
-            putNewPiece('g', 7, new Pawn(bor, Color.Black));
-            putNewPiece('h', 7, new Pawn(bor, Color.Black));
+            putNewPiece('a', 7, new Pawn(bor, Color.Black, this));
+            putNewPiece('b', 5, new Pawn(bor, Color.Black, this));
+            putNewPiece('c', 7, new Pawn(bor, Color.Black, this));
+            putNewPiece('d', 7, new Pawn(bor, Color.Black, this));
+            putNewPiece('e', 7, new Pawn(bor, Color.Black, this));
+            putNewPiece('f', 7, new Pawn(bor, Color.Black, this));
+            putNewPiece('g', 4, new Pawn(bor, Color.Black, this));
+            putNewPiece('h', 7, new Pawn(bor, Color.Black, this));
             putNewPiece('a', 8, new Tower(bor, Color.Black));
             putNewPiece('b', 8, new Horse(bor, Color.Black));
             putNewPiece('c', 8, new Bishop(bor, Color.Black));
