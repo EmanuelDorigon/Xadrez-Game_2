@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using board;
+using System;
 
 
 namespace xadrez
@@ -37,6 +38,7 @@ namespace xadrez
             {
                 captured.Add(pieceCaptured);
             }
+
 
             // #jogadaespecial small roque
             if(p is King && destination.Column == origin.Column + 2)
@@ -134,35 +136,23 @@ namespace xadrez
         public void gamedPerforms(Position origin, Position destination)
         {
             Piece pieceCaptured = runMoviment(origin, destination);
-            Piece pieceCaptured2 = pieceCaptured;
-            /*
-            if (thisCheckmate(CurrentePlayer))
+            Piece p = bor.piece(destination);
+
+            // #jogadaespecial promocao
+            if (p is Pawn)
             {
-                undosMoviment(origin, destination, pieceCaptured);
-                throw new BoardException("Moviment undone becouse this piece went into checkmate");
+                if ((p.Color == Color.White && destination.Line == 0) || (p.Color == Color.Black && destination.Line == 7))
+                {
+                    p = bor.removePiece(destination);
+                    pieces.Remove(p);
+                    Piece lady = new Lady(bor, p.Color);
+                    bor.putPiece(lady, destination);
+                    pieces.Add(lady);
+                }
             }
             
-            if (thisCheckmate(adversary(CurrentePlayer)))
-            {
-                CheckMate = true;
-            }
-            else
-            {
-                CheckMate = false;
-            }
-            */
             round++;            
             changedPlayer();
-            Piece p = bor.piece(destination);
-            // #jogadaespecial en passant
-            if (p is Pawn && destination.Line == (origin.Line - 2) || destination.Line == (origin.Line + 2))
-            {
-                vulnerableEnPassant = p;
-            }
-            else
-            {
-                vulnerableEnPassant = null;
-            }
         }
         
         public void validPositionTheOrigin(Position pos)
@@ -286,10 +276,10 @@ namespace xadrez
         {
             putNewPiece('a', 2, new Pawn(bor, Color.White, this));
             putNewPiece('b', 2, new Pawn(bor, Color.White, this));
-            putNewPiece('c', 5, new Pawn(bor, Color.White, this));
+            putNewPiece('c', 2, new Pawn(bor, Color.White, this));
             putNewPiece('d', 2, new Pawn(bor, Color.White, this));
             putNewPiece('e', 2, new Pawn(bor, Color.White, this));
-            putNewPiece('f', 4, new Pawn(bor, Color.White, this));
+            putNewPiece('f', 2, new Pawn(bor, Color.White, this));
             putNewPiece('g', 2, new Pawn(bor, Color.White, this));
             putNewPiece('h', 2, new Pawn(bor, Color.White, this));
             putNewPiece('a', 1, new Tower(bor, Color.White));
@@ -304,12 +294,12 @@ namespace xadrez
 
 
             putNewPiece('a', 7, new Pawn(bor, Color.Black, this));
-            putNewPiece('b', 5, new Pawn(bor, Color.Black, this));
+            putNewPiece('b', 7, new Pawn(bor, Color.Black, this));
             putNewPiece('c', 7, new Pawn(bor, Color.Black, this));
             putNewPiece('d', 7, new Pawn(bor, Color.Black, this));
             putNewPiece('e', 7, new Pawn(bor, Color.Black, this));
             putNewPiece('f', 7, new Pawn(bor, Color.Black, this));
-            putNewPiece('g', 4, new Pawn(bor, Color.Black, this));
+            putNewPiece('g', 7, new Pawn(bor, Color.Black, this));
             putNewPiece('h', 7, new Pawn(bor, Color.Black, this));
             putNewPiece('a', 8, new Tower(bor, Color.Black));
             putNewPiece('b', 8, new Horse(bor, Color.Black));

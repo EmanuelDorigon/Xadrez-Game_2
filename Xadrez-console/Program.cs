@@ -16,7 +16,7 @@ namespace Xadrez_console
                     try
                     {
                         Console.Clear();
-                        Screen.printMatch(game);
+                        Screen.printMatch(game);                    
 
                         Console.WriteLine();
                         Console.Write("Origin: ");

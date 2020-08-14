@@ -55,38 +55,7 @@ namespace xadrez
                 if (Boar.positionValid(pos) && existEnemy(pos))
                 {
                     array[pos.Line, pos.Column] = true;
-                }
-
-                // #jogadaespecial en passant
-                if (Position.Line == 4)
-                {
-                    array[2, 0] = true;
-                    Position left = new Position(Position.Line, Position.Column + 1);
-                    if (Boar.positionValid(left))
-                    {                       
-                        array[2, 3] = true;
-                    }
-                    if (existEnemy(left))
-                    {                       
-                        array[3, 3] = true;
-                    }
-                    if (Boar.piece(left) == Game.vulnerableEnPassant)
-                    {                        
-                        array[4, 3] = true;
-                    }
-
-                    if (Boar.positionValid(left) && existEnemy(left) && Boar.piece(left) == Game.vulnerableEnPassant)
-                    {
-                        array[left.Line - 1, left.Column] = true;
-                        array[3, 0] = true;                        
-                    }
-
-                    Position right = new Position(Position.Line, Position.Column - 1);
-                    if (Boar.positionValid(right) && existEnemy(right) && Boar.piece(right) == Game.vulnerableEnPassant)
-                    {
-                        array[right.Line, right.Column] = true;
-                    }
-                }
+                }                               
                 
             }
             else           
@@ -115,23 +84,7 @@ namespace xadrez
                 if (Boar.positionValid(pos) && existEnemy(pos))
                 {
                     array[pos.Line, pos.Column] = true;
-                }
-
-                // #jogadaespecial en passant
-                if (Position.Line == 4)
-                {
-                    Position left = new Position(Position.Line, Position.Column - 1);
-                    if (Boar.positionValid(left) && existEnemy(left) && Boar.piece(left) == Game.vulnerableEnPassant)
-                    {
-                        array[left.Line, left.Column] = true;
-                    }
-
-                    Position right = new Position(Position.Line, Position.Column + 1);
-                    if (Boar.positionValid(right) && existEnemy(right) && Boar.piece(right) == Game.vulnerableEnPassant)
-                    {
-                        array[right.Line, right.Column] = true;
-                    }
-                }
+                }                
             }
             return array;
         }

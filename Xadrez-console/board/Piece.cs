@@ -45,7 +45,7 @@ namespace board
         {
             return movimetsPosible()[pos.Line, pos.Column];
         }
-
+        
         public abstract bool[,] movimetsPosible(); // We have metod abstract, becose Piese is class generic
         
         
